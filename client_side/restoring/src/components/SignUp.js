@@ -32,20 +32,23 @@ function SignUp(props) {
   };
   function handleSubmit(event) {
     event.preventDefault();
+    setLoading(false);
     const user = {
       username,
       email,
       password,
       retypePassword
     }
-    axios.post(SERVER_URL + "/api/users", user).catch(
+    axios.put(SERVER_URL + `/api/v1/users?email=${user.email}`, user).catch(
       (err) => {
         if (err) {
           alert(err.response.data);
+          setLoading(true);
         }
       }
     ).then((response) => {
       localStorage.setItem("user", response.data);
+      setLoading(true);
       redirect("/order-details");
     }
     );
@@ -54,7 +57,11 @@ function SignUp(props) {
     const { name, value, classList } = e.target;
     switch (name) {
       case "username":
-        axios.get(SERVER_URL + `/api/v1/users?name=${value}`).catch((err) => {
+        axios.get(SERVER_URL + `/api/v1/users?name=${value}`, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).catch((err) => {
           if (err) {
             classList.add("border-danger");
           }
@@ -69,7 +76,7 @@ function SignUp(props) {
         break;
     }
   }
-  //style = {{ width: "12vw", height: "25vh", position: "absolute", top: "20%", left: "50%", backgroundColor: "rgb(255,255,255,0.3)" }}
+
   return (
     <>
       <div className="container mt-5">
