@@ -42,3 +42,12 @@ Method: post
 Path: /api/v1/orders
 Body: {user_id: user.id, product_name: product_name, quantity: quantity}
 Returns: If request was fullfiled -> status 200
+
+7) Get total user's order's price and quantity
+Method: get
+Path: /api/v1/orders/:id       (id ----> user.id)
+Returns: result: {total_price, quantity}
+
+
+
+
