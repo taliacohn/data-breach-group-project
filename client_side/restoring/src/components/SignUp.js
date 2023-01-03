@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import SERVER_URL from "../globals";
+import { redirect } from "react-router-dom";
 
 function SignUp(props) {
   const [username, setUsername] = useState("");
@@ -43,7 +44,11 @@ function SignUp(props) {
           alert(err.response.data);
         }
       }
-    ).then((response) => localStorage.setItem("user", response.data));
+    ).then((response) => {
+      localStorage.setItem("user", response.data);
+      redirect("/order-details");
+    }
+    );
   };
   function handleBlur(e) {
     const { name, value, classList } = e.target;
