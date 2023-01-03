@@ -2,6 +2,7 @@ import OrderInfo from "./OrderInfo";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
+import AddOrder from "./AddOrder";
 import axios from "axios";
 
 function OrderDetails() {
@@ -78,6 +79,8 @@ function OrderDetails() {
           </Button>
         </Form>
       </div>
+
+      <div>{AddOrder}</div>
 
       <div className="d-flex flex-wrap justify-content-center p-4">
         {OrderComponents}
