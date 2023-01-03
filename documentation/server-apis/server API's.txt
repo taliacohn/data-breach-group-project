@@ -1,0 +1,44 @@
+1) User existence validation
+Method: get
+Path: /api/v1/users?email={user.email}
+Returns: If user exists -> status 200 (result: {user.email, user.phone, user.id}) otherwise status 404;
+
+1.1) User name existence validation
+Method: get
+Path: /api/v1/users?name={user.name}
+Returns: If user doesn't exist -> status 404 otherwise status 200;
+
+
+2) Login
+Method: post
+Path: /api/v1/users?email={user.email}
+Body: {password: password}
+Returns: If user logged in -> status 200 (result: {user.name, user.email, user.phone. user.orders, user.id}) 
+otherwise status 404;
+
+3) Change user password and name
+Method: put
+Path: /api/v1/users?email={user.email}
+Body: user = {
+      name,
+      email,
+      password,
+      retypePassword
+    }
+Returns: If request was fullfiled -> status 200
+
+4) Get user's orders
+Method: get
+Path: /api/v1/users?id={user.id}&orders=all
+Returns: result: {orders}
+
+5) Get user's order by product name
+Method: get
+Path: /api/v1/users?id={user.id}&name={product_name}
+Returns: result: {order}
+
+6) Create new order
+Method: post
+Path: /api/v1/orders
+Body: {user_id: user.id, product_name: product_name, quantity: quantity}
+Returns: If request was fullfiled -> status 200
