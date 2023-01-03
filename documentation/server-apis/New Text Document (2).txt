@@ -1,0 +1,12 @@
+func(arr){
+  array = arr
+
+  for(let i = array.length - 1; i >= 0 ; i--){
+
+	if(item === ' ' and i !== array.length - 1){
+		swap(array[i], array[i+1])
+		}
+		return array
+}
+
+11 floor
