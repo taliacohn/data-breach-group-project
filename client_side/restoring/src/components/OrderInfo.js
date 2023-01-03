@@ -1,23 +1,13 @@
 import Card from "react-bootstrap/Card";
 
-function OrderInfo() {
+function OrderInfo(props) {
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card className="mx-4 px-4 my-3" style={{ width: "20rem" }}>
       <Card.Body>
-        <Card.Title>Order Information</Card.Title>
-        <Card.Subtitle></Card.Subtitle>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
+        <Card.Title className="mb-3">{props.id}</Card.Title>
+        <Card.Text>Order Date: {props.date}</Card.Text>
+        <Card.Text>Number of Items: {props.items}</Card.Text>
+        <Card.Text>Total Price: {props.price}</Card.Text>
       </Card.Body>
     </Card>
   );

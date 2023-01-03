@@ -16,24 +16,23 @@ Body: {password: password}
 Returns: If user logged in -> status 200 (result: {user.name, user.email, user.phone. user.orders, user.id}) 
 otherwise status 404;
 
-3) Change user password
-Method: post
+3) Change user password and name
+Method: put
 Path: /api/v1/users?email={user.email}
-Body: {new_password: password}
+Body: user = {
+      name,
+      email,
+      password,
+      retypePassword
+    }
 Returns: If request was fullfiled -> status 200
 
-4)Change user name
-Method: post
-Path: /api/v1/users?id={user.id}
-Body: {new_name: name}
-Returns:If request was fullfiled -> status 200
-
-5) Get user's orders
+4) Get user's orders
 Method: get
 Path: /api/v1/users?id={user.id}&orders=all
 Returns: result: {orders}
 
-6) Get user's order by product name
+5) Get user's order by product name
 Method: get
 Path: /api/v1/users?id={user.id}&name={product_name}
 Returns: result: {order}
