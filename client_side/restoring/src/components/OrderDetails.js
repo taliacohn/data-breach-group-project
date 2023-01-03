@@ -1,6 +1,6 @@
 import OrderInfo from "./OrderInfo";
 
 function OrderDetails() {
-  return <></>;
+  return <> </>;
 }
 export default OrderDetails;
