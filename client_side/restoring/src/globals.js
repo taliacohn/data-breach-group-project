@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://localhost:3002';
+const SERVER_URL = 'http://localhost:4000';
 
 
 export default SERVER_URL;
