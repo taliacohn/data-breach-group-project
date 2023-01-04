@@ -1,6 +1,5 @@
 import axios from "axios";
 import { getUser } from "./addOrderFunctions";
-import OrderInfo from "../components/OrderInfo";
 
 const user = getUser();
 
