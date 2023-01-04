@@ -3,30 +3,21 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import AddOrder from "./AddOrder";
-import axios from "axios";
+import {
+  showSearchComponents,
+  showComponents,
+} from "../controller/orderDetailsData";
 
 function OrderDetails() {
   const [OrderComponents, setOrderComponents] = useState();
   const [productName, setProductName] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const orderResponse = showComponents();
 
-  const getOrderInfo = () => {
-    return axios.get(
-      `http:localhost:3000/api/v1/users?id=${user.id}&orders=all`
-    );
-  };
-
-  const getSearchInfo = () => {
-    return axios.get(
-      `http:localhost:3000/api/v1/users?id=${user.id}&name=${productName}`
-    );
-  };
-
-  function loadOrderComponents(response) {
-    if (response.data.orders) {
+  function setComponents() {
+    if (orderResponse) {
       setOrderComponents(
-        response.data.orders.map((obj) => {
+        orderResponse.data.result.map((obj) => {
           return (
             <OrderInfo
               id={obj.id}
@@ -41,20 +32,6 @@ function OrderDetails() {
       setOrderComponents(`<h3>No previous orders</h3>`);
     }
   }
-
-  const showComponents = () => {
-    getOrderInfo().then((response) => {
-      loadOrderComponents(response);
-    });
-  };
-
-  const showSearchComponents = () => {
-    getSearchInfo().then((response) => {
-      loadOrderComponents(response);
-    });
-  };
-
-  showComponents();
 
   return (
     <>
@@ -73,7 +50,7 @@ function OrderDetails() {
           <Button
             variant="outline-secondary"
             className="me-3"
-            onClick={showSearchComponents}
+            onClick={showSearchComponents(productName)}
           >
             Search
           </Button>

@@ -2,47 +2,23 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
-import SERVER_URL from "../globals";
-import { useNavigate } from "react-router-dom";
+import { date, sendTotalPrice, getUser } from "../controller/addOrderFunctions";
+import { newOrderComplete } from "../controller/addOrderData";
 
 function AddOrder() {
   const [show, setShow] = useState(false);
   const [productName, setProductName] = useState("");
   const [numOfProducts, setNumOfProducts] = useState();
-  const [totalPrice, setTotalPrice] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const navigate = useNavigate;
 
-  const date = () => {
-    let date = new Date().toISOString.slice(0, 10);
+  const date = date();
 
-    return date;
-  };
+  const sendTotalPrice = sendTotalPrice(numOfProducts);
 
-  const sendTotalPrice = () => {
-    return numOfProducts * 2.87;
-  };
-
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  const sendNewOrder = () => {
-    return axios.post(SERVER_URL + `/api/v1/orders`, {
-      user_id: user.id,
-      product_name: productName,
-      quantity: numOfProducts,
-    });
-  };
-
-  const newOrderComplete = () => {
-    sendNewOrder.then((response) => {
-      if (response.data.status) {
-        navigate("/order-details");
-      }
-    });
-  };
+  const user = getUser();
+  const userId = user.id;
 
   return (
     <>
@@ -76,9 +52,12 @@ function AddOrder() {
             <Form.Label>Number of Product</Form.Label>
             <Form.Select
               aria-label="Default select number"
-              onChange={(e) => {
-                setNumOfProducts(e.target.value);
-              }}
+              onChange={
+                ((e) => {
+                  setNumOfProducts(e.target.value);
+                },
+                { sendTotalPrice })
+              }
             >
               <option value="1">1</option>
               <option value="2">2</option>
@@ -100,7 +79,13 @@ function AddOrder() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(handleClose, newOrderComplete)}>
+          <Button
+            variant="primary"
+            onClick={
+              (handleClose,
+              newOrderComplete(productName, userId, numOfProducts))
+            }
+          >
             Save Changes
           </Button>
         </Modal.Footer>
