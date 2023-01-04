@@ -12,12 +12,12 @@ function OrderDetails() {
   const [OrderComponents, setOrderComponents] = useState();
   const [productName, setProductName] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const orderResponse = showComponents();
 
-  function loadOrderComponents(response) {
-    if (response.data.status == "success") {
+  function setComponents() {
+    if (orderResponse) {
       setOrderComponents(
-        response.data.result.map((obj) => {
+        orderResponse.data.result.map((obj) => {
           return (
             <OrderInfo
               id={obj.id}
@@ -32,8 +32,6 @@ function OrderDetails() {
       setOrderComponents(`<h3>No previous orders</h3>`);
     }
   }
-
-  showComponents();
 
   return (
     <>
@@ -52,7 +50,7 @@ function OrderDetails() {
           <Button
             variant="outline-secondary"
             className="me-3"
-            onClick={showSearchComponents}
+            onClick={showSearchComponents(productName)}
           >
             Search
           </Button>

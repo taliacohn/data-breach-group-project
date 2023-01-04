@@ -1,10 +1,14 @@
 import axios from "axios";
+import { getUser } from "./addOrderFunctions";
+import OrderInfo from "../components/OrderInfo";
+
+const user = getUser();
 
 const getOrderInfo = () => {
   return axios.get(`http:localhost:3000/api/v1/users?id=${user.id}&orders=all`);
 };
 
-const getSearchInfo = () => {
+const getSearchInfo = (productName) => {
   return axios.get(
     `http:localhost:3000/api/v1/users?id=${user.id}&name=${productName}`
   );
@@ -12,13 +16,17 @@ const getSearchInfo = () => {
 
 const showComponents = () => {
   getOrderInfo().then((response) => {
-    loadOrderComponents(response);
+    if ((response.data.status = "success")) {
+      return response;
+    }
   });
 };
 
-const showSearchComponents = () => {
-  getSearchInfo().then((response) => {
-    loadOrderComponents(response);
+const showSearchComponents = (productName) => {
+  getSearchInfo(productName).then((response) => {
+    if ((response.data.status = "success")) {
+      return response;
+    }
   });
 };
 
