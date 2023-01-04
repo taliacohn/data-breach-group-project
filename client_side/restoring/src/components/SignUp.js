@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import SERVER_URL from "../globals";
 import { redirect } from "react-router-dom";
+import { getData, putData } from "../controller/getData";
 
 function SignUp(props) {
   const [username, setUsername] = useState("");
@@ -39,40 +40,25 @@ function SignUp(props) {
       password,
       retypePassword
     }
-    axios.put(SERVER_URL + `/api/v1/users?email=${user.email}`, user).catch(
+    putData(`/api/v1/users?email=${user.email}`, user,
       (err) => {
-        if (err) {
-          alert(err.response.data);
-          setLoading(true);
-        }
-      }
-    ).then((response) => {
-      localStorage.setItem("user", response.data);
-      setLoading(true);
-      redirect("/order-details");
-    }
-    );
+        alert(err.response.data);
+        setLoading(true);
+      },
+      (response) => {
+        localStorage.setItem("user", response.data);
+        setLoading(true);
+        redirect("/order-details");
+      });
   };
   function handleBlur(e) {
     const { name, value, classList } = e.target;
     switch (name) {
       case "username":
-        axios.get(SERVER_URL + `/api/v1/users?name=${value}`, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).catch((err) => {
-          if (err) {
-            classList.add("border-danger");
-          }
-        });
+        getData(`/api/v1/users?name=${value}`, () => classList.add("border-danger"), () => { });
         break;
       case "email":
-        axios.get(SERVER_URL + `/api/v1/users?email=${value}`).catch((err) => {
-          if (err) {
-            classList.add("border-danger");
-          }
-        });
+        getData(`/api/v1/users?email=${value}`, () => classList.add("border-danger"), () => { });
         break;
     }
   }
