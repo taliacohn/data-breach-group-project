@@ -3,25 +3,16 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import AddOrder from "./AddOrder";
-import axios from "axios";
+import {
+  showSearchComponents,
+  showComponents,
+} from "../controller/orderDetailsData";
 
 function OrderDetails() {
   const [OrderComponents, setOrderComponents] = useState();
   const [productName, setProductName] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
-
-  const getOrderInfo = () => {
-    return axios.get(
-      `http:localhost:3000/api/v1/users?id=${user.id}&orders=all`
-    );
-  };
-
-  const getSearchInfo = () => {
-    return axios.get(
-      `http:localhost:3000/api/v1/users?id=${user.id}&name=${productName}`
-    );
-  };
 
   function loadOrderComponents(response) {
     if (response.data.status == "success") {
@@ -41,18 +32,6 @@ function OrderDetails() {
       setOrderComponents(`<h3>No previous orders</h3>`);
     }
   }
-
-  const showComponents = () => {
-    getOrderInfo().then((response) => {
-      loadOrderComponents(response);
-    });
-  };
-
-  const showSearchComponents = () => {
-    getSearchInfo().then((response) => {
-      loadOrderComponents(response);
-    });
-  };
 
   showComponents();
 
