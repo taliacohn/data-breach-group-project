@@ -24,9 +24,9 @@ function OrderDetails() {
   };
 
   function loadOrderComponents(response) {
-    if (response.data.orders) {
+    if (response.data.status == "success") {
       setOrderComponents(
-        response.data.orders.map((obj) => {
+        response.data.result.map((obj) => {
           return (
             <OrderInfo
               id={obj.id}
