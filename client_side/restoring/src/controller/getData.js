@@ -1,4 +1,5 @@
 import axios from "axios";
+import SERVER_URL from "../globals";
 
 function getData(url, handleError, handleThen) {
   axios
