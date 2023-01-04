@@ -12,9 +12,10 @@ function OrderDetails() {
   const [OrderComponents, setOrderComponents] = useState();
   const [productName, setProductName] = useState("");
 
-  const orderResponse = showComponents();
+  const orderInfo = showComponents();
+  const searchInfo = showSearchComponents(productName);
 
-  function setComponents() {
+  function setComponents(orderResponse) {
     if (orderResponse) {
       setOrderComponents(
         orderResponse.data.result.map((obj) => {
@@ -33,6 +34,10 @@ function OrderDetails() {
     }
   }
 
+  useEffect(() => {
+    setComponents(orderInfo);
+  }, []);
+
   return (
     <>
       <div className="d-flex justify-content-between mt-5">
@@ -50,7 +55,7 @@ function OrderDetails() {
           <Button
             variant="outline-secondary"
             className="me-3"
-            onClick={showSearchComponents(productName)}
+            onClick={setComponents(searchInfo)}
           >
             Search
           </Button>
