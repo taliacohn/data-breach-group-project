@@ -19,6 +19,13 @@ exports.accountExistence = async (email) => {
 
 };
 
+exports.usernameExistence = async (name) => {
+    const connection = await con();
+    const [rows, fields] = await connection.execute(`SELECT * FROM users WHERE username=?;`, [name])
+    return await rows
+
+}
+
 exports.changeUserData = async (name, password, email) => {
     const connection = await con();
     const [rows, fields] = await connection.execute(`UPDATE users SET password=? username=? WHERE email=?;`

@@ -8,6 +8,9 @@ exports.postNewOrder = async (req, res) => {
     const quantity = req.body.quantity;
     const total_price = 2.78 * +quantity;
 
+    const result = db.newOrder(user_id, product_name, quantity)
+
+
     await db.query(`insert into orders values (default, ${user_id}, ${product_name}, curdate(), ${total_price}, ${quantity}, 2.78);`, (err, result) => {
         if (err) {
             console.log(err)
