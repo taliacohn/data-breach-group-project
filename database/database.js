@@ -25,7 +25,6 @@ exports.usernameExistence = async (name) => {
     return await rows
 
 }
-// select SUM(total_price) as 'total', SUM(quantity) as 'quantity' from orders where user_id=${user_id};
 exports.changeUserData = async (name, password, email) => {
     const connection = await con();
     const [rows, fields] = await connection.execute(`UPDATE users SET password=? username=? WHERE email=?;`
