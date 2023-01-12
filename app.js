@@ -11,6 +11,14 @@ var app = express();
 const cors = require("cors");
 // view engine setup
 
+app.use(
+    cors({
+        origin: ["http://localhost:4000"],
+        methods: ["GET", "POST", "PUT", "OPTIONS"],
+        credentials: true,
+    })
+);
+
 app.use(logger('dev'));
 app.use(express.json());
 
@@ -22,14 +30,6 @@ app.use('/api/v1/', indexRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/orders', ordersRouter);
 
-
-app.use(
-    cors({
-      origin: ["http://localhost:4000"],
-      methods: ["GET", "POST", 'PUT'],
-      credentials: true,
-    })
-);
 
 
 // catch 404 and forward to error handler
